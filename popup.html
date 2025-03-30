@@ -3,32 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Summus - T&C Summarizer</title>
-  <link rel="stylesheet" href="tailwind.min.css">
+  <title>Summus - Text Summarizer</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      width: 320px;
+      height: 500px;
+      overflow: hidden;
+    }
+    .sidebar {
+      box-shadow: -2px 0 10px rgba(0, 0, 0, 0.05);
+      border-left: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .tab-active {
+      color: #3B82F6;
+      border-bottom: 2px solid #3B82F6;
+      font-weight: 500;
+    }
+    .tab {
+      transition: all 0.2s ease;
+    }
+    .tab:hover:not(.tab-active) {
+      background-color: rgba(0, 0, 0, 0.03);
+    }
+    #summary {
+      min-height: 200px;
+      resize: none;
+    }
+    #summary:focus {
+      outline: none;
+    }
+    .close-button:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  </style>
 </head>
-<body >
-
+<body class="bg-white flex flex-col height-full sidebar resize-y overflow-hidden">
   <!-- Header -->
-  <div class="flex items-center justify-between mb-4">
-    <h2 class="text-2xl font-bold text-purple-400">Summus</h2>
+  <div class="bg-blue-600 text-white py-3 px-4 flex items-center justify-between">
+    <h1 class="text-lg font-medium">AI Sidebar</h1>
+    <button class="close-button rounded-full p-1 hover:bg-white hover:bg-opacity-20 transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
   </div>
-
-  <!-- Subtitle -->
-  <p class="text-pink-400 text-sm mb-3">✨ Reach the Pinnacle of Productivity ✨</p>
-
-  <!-- Summarization Card -->
-  <div class="bg-purple-900 bg-opacity-40 shadow-md p-4 rounded-lg flex-grow flex flex-col border border-pink-500">
-    <textarea id="summary" class="w-full h-40 p-2 bg-black text-white border border-purple-400 rounded-lg resize-none" 
-              placeholder="Your summary will appear here..." readonly></textarea>
+  
+  <!-- Tabs -->
+  <div class="flex border-b">
+    <div class="tab tab-active px-4 py-3 text-center flex-1 cursor-pointer">Summarization</div>
+    <div class="tab text-gray-600 px-4 py-3 text-center flex-1 cursor-pointer">Chat</div>
+    <div class="tab text-gray-600 px-4 py-3 text-center flex-1 cursor-pointer">Settings</div>
   </div>
-
-  <!-- Action Button -->
-  <button id="summarize-btn" class="mt-4 w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 rounded-lg 
-                                   hover:from-pink-500 hover:to-purple-500 transition-all duration-300 shadow-md">
-    Get Started 💜
-  </button>
-
+  
+  <!-- Content Area -->
+  <div class="flex-grow overflow-y-auto p-4 flex flex-col">
+    <!-- User Text Selection -->
+    <div class="mb-4">
+      <div class="text-sm font-medium text-gray-500 mb-1">User:</div>
+      <div class="text-sm text-gray-700">Select text on the page to summarize</div>
+    </div>
+    
+    <!-- AI Summary Response -->
+    <div class="flex-grow">
+      <div class="text-sm font-medium text-blue-600 mb-1">AI:</div>
+      <textarea id="summary" class="w-full p-3 text-sm text-gray-700 border border-gray-200 rounded-md bg-gray-50" placeholder="Your summary will appear here..." readonly></textarea>
+    </div>
+  </div>
+  
+  <!-- Action Area -->
+  <div class="p-3 border-t bg-gray-50 flex">
+    <button id="summarize-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition-colors">
+      Summarize Selection
+    </button>
+  </div>
+  
   <script src="popup.js"></script>
 </body>
 </html>
