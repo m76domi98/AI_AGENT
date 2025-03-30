@@ -141,13 +141,46 @@
       margin-bottom: 16px;
     }
     .greeting {
-      font-size: 1.75rem;
-      background: linear-gradient(to right, #ff7eb9, #8c52ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
+  font-size: 1.75rem;
+  background: linear-gradient(to right, #ff7eb9, #8c52ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  
+  /* Typewriter specific properties */
+  overflow: hidden;
+  border-right: .15em solid #ff7eb9;
+  white-space: nowrap;
+  display: inline-block;
+  max-width: fit-content;
+  animation: 
+    typing-backspacing-greeting 8s steps(12, end) infinite,
+    blink-caret-greeting .75s step-end infinite;
+}
+
+/* The typing and backspacing effect for greeting */
+@keyframes typing-backspacing-greeting {
+  0% { width: 0 }
+  30% { width: 12ch }  /* Type out "Good evening" */
+  45% { width: 12ch }  /* Pause at the end */
+  70% { width: 0 }     /* Backspace to empty */
+  85% { width: 0 }     /* Pause before restarting */
+  100% { width: 0 }
+}
+
+/* The typewriter cursor effect for greeting */
+@keyframes blink-caret-greeting {
+  from, to { border-color: transparent }
+  50% { border-color: #ff7eb9; }  /* Match the gradient start color */
+}
+
+/* Ensure the container allows inline-block to work properly */
+.welcome-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;  /* This keeps everything left-aligned */
+}
     .subgreeting {
       font-size: 1.25rem;
       color: #a699d1;
