@@ -18,3 +18,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         document.getElementById("summary").value = request.summary || "No text selected.";
     }
 });
+
+chrome.sidePanel.setPanelBehavior({
+    openPanelOnActionClick: true
+  }).catch((error) => console.error(error));
