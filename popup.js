@@ -1,31 +1,20 @@
 document.getElementById("summarize-btn").addEventListener("click", async () => {
     let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        function: extractText
-    });
+    if (tab) {
+        chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            function: extractHighlightedText,
+        });
+    }
 });
 
-function extractText() {
-    let text = document.body.innerText;
-    chrome.runtime.sendMessage({ action: "summarize", text: text });
+function extractHighlightedText() {
+    let selectedText = window.getSelection().toString().trim();
+    chrome.runtime.sendMessage({ action: "displaySummary", summary: selectedText });
 }
 
-//Configures the side panel.
-chrome.sidePanel.setOptions({
-    // Whether sidepanel is enabled or not. By default it's true. 
-    enabled: true,
-    
-    // html file path
-    path: "popup.html",
-    
-    // the tab in which the sidepanel should appear. If omitted extensions assummes default behaviour.
-    // tabId: "tab-id" 
-  })
-
-  chrome.sidePanel.setPanelBehavior({
-    // Whether clicking the extension's icon will
-    // toggle showing the extension's entry 
-    // in the side panel. Defaults to false.
-    openPanelOnActionClick: true,
- });
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "displaySummary") {
+        document.getElementById("summary").value = request.summary || "No text selected.";
+    }
+});
