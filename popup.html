@@ -5,69 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Summus - T&C Summarizer</title>
   <link rel="stylesheet" href="tailwind.min.css">
-  <style>
-    body {
-      background-color: #000;
-      background-image: 
-        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
-        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
-        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px);
-      background-size: 550px 550px, 350px 350px, 250px 250px;
-      background-position: 0 0, 40px 60px, 130px 270px;
-    }
-    .card {
-      backdrop-filter: blur(3px);
-      box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
-    }
-    .glow-text {
-      text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
-    }
-    .star-button {
-      box-shadow: 0 0 15px rgba(219, 39, 119, 0.5);
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="w-80 h-screen bg-black text-white p-4 flex flex-col">
-  
-  <!-- Main Card -->
-  <div class="card bg-black bg-opacity-50 rounded-xl border border-purple-500 p-5 flex flex-col h-full">
-    
-    <!-- Header -->
-    <div class="flex items-center justify-between mb-3">
-      <h2 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400 glow-text">Summus</h2>
-      <div class="h-6 w-6 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center">
-        <span class="text-xs">✨</span>
-      </div>
-    </div>
-    
-    <!-- Subtitle -->
-    <p class="text-pink-300 text-sm mb-4 italic">Reach the Pinnacle of Productivity</p>
-    
-    <!-- Summarization Card -->
-    <div class="bg-gray-900 bg-opacity-40 rounded-xl border border-purple-400 p-3 flex-grow mb-4 relative overflow-hidden">
-      <div class="absolute inset-0 opacity-20">
-        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-900 via-transparent to-pink-900"></div>
-      </div>
-      <textarea id="summary" class="w-full h-full p-2 bg-transparent text-white rounded-lg resize-none relative z-10" placeholder="Your summary will appear here..." readonly></textarea>
-    </div>
-    
-    <!-- Action Button -->
-    <button id="summarize-btn" class="star-button w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 rounded-xl hover:from-pink-600 hover:to-purple-600 transition-all duration-300 font-semibold flex items-center justify-center space-x-2">
-      <span>Get Started</span>
-      <span class="text-lg">✨</span>
-    </button>
-    
-    <!-- Footer -->
-    <div class="mt-3 flex justify-center">
-      <div class="flex space-x-2">
-        <div class="w-2 h-2 rounded-full bg-purple-400"></div>
-        <div class="w-2 h-2 rounded-full bg-pink-400"></div>
-        <div class="w-2 h-2 rounded-full bg-purple-400"></div>
-      </div>
-    </div>
-    
+<body >
+
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-2xl font-bold text-purple-400">Summus</h2>
   </div>
-  
+
+  <!-- Subtitle -->
+  <p class="text-pink-400 text-sm mb-3">✨ Reach the Pinnacle of Productivity ✨</p>
+
+  <!-- Summarization Card -->
+  <div class="bg-purple-900 bg-opacity-40 shadow-md p-4 rounded-lg flex-grow flex flex-col border border-pink-500">
+    <textarea id="summary" class="w-full h-40 p-2 bg-black text-white border border-purple-400 rounded-lg resize-none" 
+              placeholder="Your summary will appear here..." readonly></textarea>
+  </div>
+
+  <!-- Action Button -->
+  <button id="summarize-btn" class="mt-4 w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white py-2 rounded-lg 
+                                   hover:from-pink-500 hover:to-purple-500 transition-all duration-300 shadow-md">
+    Get Started 💜
+  </button>
+
   <script src="popup.js"></script>
 </body>
 </html>

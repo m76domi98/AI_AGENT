@@ -1,14 +1,69 @@
 @import "tailwindcss";
 
 body {
-    font-family: Arial, sans-serif;
-    padding: 10px;
-    width: 300px;
-}
-button {
-    background-color: #007bff;
-    color: white;
-    padding: 8px;
-    border: none;
-    cursor: pointer;
-}
+    body {
+        font-family: 'Inter', sans-serif;
+        background: rgba(0, 0, 0, 0.02);
+      }
+      .sidebar {
+        width: 320px;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+        border-left: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      .tab-active {
+        border-bottom: 2px solid #3B82F6;
+        font-weight: 500;
+      }
+      .tab {
+        transition: all 0.2s ease;
+      }
+      .tab:hover:not(.tab-active) {
+        background-color: rgba(0, 0, 0, 0.03);
+      }
+      .ai-response {
+        border-radius: 12px;
+        background: linear-gradient(to bottom right, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      .gradient-text {
+        background: linear-gradient(90deg, #3B82F6, #8B5CF6);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .input-box {
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        transition: all 0.2s ease;
+      }
+      .input-box:focus-within {
+        border-color: #3B82F6;
+        box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3);
+      }
+      .send-button {
+        transition: all 0.2s ease;
+      }
+      .send-button:hover {
+        background-color: #2563EB;
+      }
+      .close-btn:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+      .summary{
+        border-radius: 12px;
+        padding: 16px;
+        background: #F5F7FA;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        height: 120px;
+        overflow-y: auto;
+      }
+      .summary-btn {
+        background-color: #8B5CF6;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: background-color 0.2s;
+      }
+      .summary-btn:hover {
+        background-color: #3B82F6;
+      }
+    }
