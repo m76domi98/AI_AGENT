@@ -4,3 +4,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         chrome.runtime.sendMessage({ action: "displaySummary", summary: summarizedText });
     }
 });
+chrome.action.onClicked.addListener((tab) =>{    
+    chrome.sidePanel.open({ tabId : tab.id }, () => {
+      console.log("Side Panel Opened");
+    });
+  });
+
+await chrome.sidePanel.open({ tabId : "the-tab-id" });
+console.log("Side Panel Opened");
