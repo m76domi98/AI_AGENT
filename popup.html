@@ -7,20 +7,28 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body {
+     * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    html, body {
+      display: flex;
       font-family: 'Poppins', sans-serif;
-      width: 400px;
-      height: 600px;
+      width: 100%;
+      min-height: 100vh;
       overflow: hidden;
       background: #1e1e2d;
     }
     .container {
+      flex-grow: 1;
       background-color: #1e1e2d;
       background-image: 
         radial-gradient(circle at 10% 20%, rgba(100, 78, 210, 0.05) 0%, transparent 30%),
         radial-gradient(circle at 80% 80%, rgba(120, 94, 240, 0.05) 0%, transparent 30%);
       border-radius: 24px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      min-height: 100vh;
     }
     .chat-bubble {
       background-color: #2d2d3d;
@@ -84,10 +92,82 @@
     .instructions {
       color: #a0aec0;
     }
+     /* Hide radio buttons */
+     .tab-input {
+            display: none;
+        }
+        
+        /* Style the tab container */
+        .tab-container {
+            width: 100%;
+            min-height: 100vh;
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+            padding-top:0px;
+        }
+        
+        /* Style the tab navigation */
+        .tab-nav {
+          display: flex;
+            width: 100%;
+            border-bottom: 1px solid #e2e8f0;
+            list-style: none;
+            /* Fixed height for the nav bar */
+            min-height: 48px;
+        }
+        .tab-nav li {
+            flex: 1;
+            text-align: center;
+        }
+        
+        /* Style the tab labels */
+        .tab-label {
+          display: block;
+            width: 100%;
+            height: 100%;
+            padding: 0.75rem 0.5rem;
+            cursor: pointer;
+            color: #718096;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+            margin-right: 0.5rem;
+        }
+        
+        .tab-label:hover {
+            color: #4a5568;
+            border-color: #cbd5e0;
+        }
+
+        .tab-content-container {
+            flex: 1;
+            overflow: auto; /* Allow scrolling if content is too tall */
+            position: relative;
+        }
+        
+        /* Style the tab content */
+        .tab-content {
+            display: none;
+            padding: 1rem;
+        }
+        
+        /* Show active tab content based on checked radio button */
+        #tab1:checked ~ .tab-nav .tab1-label,
+        #tab2:checked ~ .tab-nav .tab2-label,
+        #tab3:checked ~ .tab-nav .tab3-label {
+            color: #3182ce;
+            border-color: #3182ce;
+        }
+        
+        #tab1:checked ~ .tab-content-container .tab1-content,
+        #tab2:checked ~ .tab-content-container .tab2-content,
+        #tab3:checked ~ .tab-content-container .tab3-content {
+            display: block;
+        }
   </style>
 </head>
 <body>
   <div class="container w-full h-full flex flex-col p-5 relative">
+
     <!-- Top Bar -->
     <div class="header flex items-center justify-between pb-4 mb-5">
       <div class="text-xl font-semibold text-gray-300">Summus - T&C</div>
@@ -96,9 +176,41 @@
         <span class="text-xs text-gray-400">Ready</span>
       </div>
     </div>
-    
+
+<div class="tab-container">
+  <!-- Hidden radio buttons for tab state -->
+  <input type="radio" name="tabs" id="tab1" class="tab-input" checked>
+  <input type="radio" name="tabs" id="tab2" class="tab-input">
+  <input type="radio" name="tabs" id="tab3" class="tab-input">
+  
+  <!-- Tab Navigation -->
+  <ul class="tab-nav">
+      <li>
+          <label for="tab1" class="tab-label tab1-label">Summarizer</label>
+      </li>
+      <li>
+          <label for="tab2" class="tab-label tab2-label">Chatbot</label>
+      </li>
+      <li>
+          <label for="tab3" class="tab-label tab3-label">Help</label>
+      </li>
+  </ul>
+  
+  <!-- Tab Content -->
+  <div class="tab-content-container">
+     
+      <div class="tab-content tab2-content mb-6 text-xs instructions pt-4">
+          <h2>Dashboard Content</h2>
+          <p>This is the content for the Dashboard tab.</p>
+      </div>
+      <div class="tab-content tab3-content mb-6 text-xs instructions pt-4">
+          <h2>Messages Content</h2>
+          <p>This is the content for the Messages tab.</p>
+      </div>
+      <div class="tab-content tab1-content">
+       
     <!-- Instructions -->
-    <div class="mb-6 text-xs instructions">
+    <div class="mb-6 text-xs instructions pt-4">
       <p>Highlight text on any webpage, then click the button below to process it.</p>
     </div>
     
@@ -129,6 +241,9 @@
         </svg>
       </button>
     </div>
+  </div>
+  </div>
+  </div>
   </div>
   
   <script src="popup.js"></script>
