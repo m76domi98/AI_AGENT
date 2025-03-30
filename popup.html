@@ -7,42 +7,38 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
-     * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     html, body {
       display: flex;
       font-family: 'Poppins', sans-serif;
       width: 100%;
       min-height: 100vh;
       overflow: hidden;
-      background: #1e1e2d;
+      background: #0f0a1e;
     }
     .container {
       flex-grow: 1;
-      background-color: #1e1e2d;
+      background-color: #0f0a1e;
       background-image: 
-        radial-gradient(circle at 10% 20%, rgba(100, 78, 210, 0.05) 0%, transparent 30%),
-        radial-gradient(circle at 80% 80%, rgba(120, 94, 240, 0.05) 0%, transparent 30%);
-      border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        radial-gradient(circle at 10% 20%, rgba(221, 143, 255, 0.08) 0%, transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(120, 94, 240, 0.08) 0%, transparent 30%);
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
     .chat-bubble {
-      background-color: #2d2d3d;
-      border-radius: 20px;
-      border-top-left-radius: 4px;
+      background-color: #1a1330;
+      border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
-    }
-    .chat-bubble:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+      border: 1px solid #3b2d5c;
     }
     .ai-avatar {
-      background: linear-gradient(135deg, #7649fe 0%, #4d24c7 100%);
+      background: linear-gradient(135deg, #ff7eb9 0%, #8c52ff 100%);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     }
     #summary {
@@ -50,7 +46,7 @@
       background-color: transparent;
       border: none;
       resize: none;
-      min-height: 200px;
+      min-height: 150px;
       line-height: 1.6;
       font-size: 15px;
     }
@@ -58,13 +54,13 @@
       outline: none;
     }
     .input-area {
-      background-color: #2d2d3d;
-      border-radius: 16px;
-      border: 1px solid #3d3d4d;
+      background-color: #1a1330;
+      border-radius: 8px;
+      border: 1px solid #3b2d5c;
     }
     .summarize-btn {
-      background: linear-gradient(135deg, #7649fe 0%, #4d24c7 100%);
-      border-radius: 12px;
+      background: linear-gradient(135deg, #ff7eb9 0%, #8c52ff 100%);
+      border-radius: 8px;
       transition: all 0.2s ease;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
@@ -76,174 +72,193 @@
       transform: translateY(1px);
     }
     .header {
-      border-bottom: 1px solid #3d3d4d;
+      border-bottom: 1px solid #3b2d5c;
     }
     .placeholder-text {
       color: #8b8b9d;
     }
-    .status-indicator {
-      width: 8px;
-      height: 8px;
-      background-color: #4ade80;
-      border-radius: 50%;
-      display: inline-block;
-      margin-right: 6px;
+    .tab-input {
+      display: none;
+    }
+    .tab-container {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .tab-nav {
+      display: flex;
+      width: 100%;
+      border-bottom: 1px solid #3b2d5c;
+      list-style: none;
+      min-height: 48px;
+    }
+    .tab-nav li {
+      flex: 1;
+      text-align: center;
+    }
+    .tab-label {
+      display: block;
+      width: 100%;
+      height: 100%;
+      padding: 0.75rem 0.5rem;
+      cursor: pointer;
+      color: #a699d1;
+      border-bottom: 2px solid transparent;
+      transition: all 0.3s;
+      margin-right: 0.5rem;
+    }
+    .tab-label:hover {
+      color: #ff7eb9;
+      border-color: #ff7eb9;
+    }
+    .tab-content-container {
+      flex: 1;
+      overflow: auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .tab-content {
+      display: none;
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    #tab1:checked ~ .tab-nav .tab1-label,
+    #tab2:checked ~ .tab-nav .tab2-label,
+    #tab3:checked ~ .tab-nav .tab3-label {
+      color: #ff7eb9;
+      border-color: #ff7eb9;
+    }
+    #tab1:checked ~ .tab-content-container .tab1-content,
+    #tab2:checked ~ .tab-content-container .tab2-content,
+    #tab3:checked ~ .tab-content-container .tab3-content {
+      display: flex;
+    }
+    .welcome-section {
+      margin-bottom: 16px;
+    }
+    .greeting {
+      font-size: 1.75rem;
+      background: linear-gradient(to right, #ff7eb9, #8c52ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .subgreeting {
+      font-size: 1.25rem;
+      color: #a699d1;
+      margin-bottom: 1rem;
     }
     .instructions {
-      color: #a0aec0;
+      color: #a699d1;
+      margin-bottom: 1rem;
+      font-size: 0.875rem;
     }
-     /* Hide radio buttons */
-     .tab-input {
-            display: none;
-        }
-        
-        /* Style the tab container */
-        .tab-container {
-            width: 100%;
-            min-height: 100vh;
-            margin: 20px auto;
-            font-family: Arial, sans-serif;
-            padding-top:0px;
-        }
-        
-        /* Style the tab navigation */
-        .tab-nav {
-          display: flex;
-            width: 100%;
-            border-bottom: 1px solid #e2e8f0;
-            list-style: none;
-            /* Fixed height for the nav bar */
-            min-height: 48px;
-        }
-        .tab-nav li {
-            flex: 1;
-            text-align: center;
-        }
-        
-        /* Style the tab labels */
-        .tab-label {
-          display: block;
-            width: 100%;
-            height: 100%;
-            padding: 0.75rem 0.5rem;
-            cursor: pointer;
-            color: #718096;
-            border-bottom: 2px solid transparent;
-            transition: all 0.3s;
-            margin-right: 0.5rem;
-        }
-        
-        .tab-label:hover {
-            color: #4a5568;
-            border-color: #cbd5e0;
-        }
-
-        .tab-content-container {
-            flex: 1;
-            overflow: auto; /* Allow scrolling if content is too tall */
-            position: relative;
-        }
-        
-        /* Style the tab content */
-        .tab-content {
-            display: none;
-            padding: 1rem;
-        }
-        
-        /* Show active tab content based on checked radio button */
-        #tab1:checked ~ .tab-nav .tab1-label,
-        #tab2:checked ~ .tab-nav .tab2-label,
-        #tab3:checked ~ .tab-nav .tab3-label {
-            color: #3182ce;
-            border-color: #3182ce;
-        }
-        
-        #tab1:checked ~ .tab-content-container .tab1-content,
-        #tab2:checked ~ .tab-content-container .tab2-content,
-        #tab3:checked ~ .tab-content-container .tab3-content {
-            display: block;
-        }
+    .new-badge {
+      background: linear-gradient(135deg, #ff7eb9 0%, #8c52ff 100%);
+    }
   </style>
 </head>
 <body>
-  <div class="container w-full h-full flex flex-col p-5 relative">
-
-    <!-- Top Bar -->
-    <div class="header flex items-center justify-between pb-4 mb-5">
-      <div class="text-xl font-semibold text-gray-300">Summus - T&C</div>
-      <div class="flex items-center">
-        <span class="status-indicator"></span>
-        <span class="text-xs text-gray-400">Ready</span>
-      </div>
-    </div>
-
-<div class="tab-container">
-  <!-- Hidden radio buttons for tab state -->
-  <input type="radio" name="tabs" id="tab1" class="tab-input" checked>
-  <input type="radio" name="tabs" id="tab2" class="tab-input">
-  <input type="radio" name="tabs" id="tab3" class="tab-input">
-  
-  <!-- Tab Navigation -->
-  <ul class="tab-nav">
-      <li>
-          <label for="tab1" class="tab-label tab1-label">Summarizer</label>
-      </li>
-      <li>
-          <label for="tab2" class="tab-label tab2-label">Chatbot</label>
-      </li>
-      <li>
-          <label for="tab3" class="tab-label tab3-label">Help</label>
-      </li>
-  </ul>
-  
-  <!-- Tab Content -->
-  <div class="tab-content-container">
-     
-      <div class="tab-content tab2-content mb-6 text-xs instructions pt-4">
-          <h2>Dashboard Content</h2>
-          <p>This is the content for the Dashboard tab.</p>
-      </div>
-      <div class="tab-content tab3-content mb-6 text-xs instructions pt-4">
-          <h2>Messages Content</h2>
-          <p>This is the content for the Messages tab.</p>
-      </div>
-      <div class="tab-content tab1-content">
-       
-    <!-- Instructions -->
-    <div class="mb-6 text-xs instructions pt-4">
-      <p>Highlight text on any webpage, then click the button below to process it.</p>
-    </div>
-    
-    <!-- Chat Content -->
-    <div class="flex-grow overflow-y-auto space-y-4 mb-4 pr-2">
-      <!-- AI Response -->
-      <div class="flex items-start space-x-3">
-        <div class="ai-avatar rounded-full p-2 flex-shrink-0">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 4V4C8.13401 4 5 7.13401 5 11V16.5C5 17.3284 5.67157 18 6.5 18H17.5C18.3284 18 19 17.3284 19 16.5V11C19 7.13401 15.866 4 12 4Z" stroke="white" stroke-width="2"/>
-            <path d="M12 18V20" stroke="white" stroke-width="2" stroke-linecap="round"/>
-            <path d="M9 22H15" stroke="white" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <div class="chat-bubble p-4 flex-grow">
-          <div class="text-xs text-gray-400 mb-2 font-medium">Summary</div>
-          <textarea id="summary" class="w-full placeholder-text" placeholder="Highlight text on any webpage and click the button below to see your summary..." readonly></textarea>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Input Area -->
-    <div class="input-area flex items-center p-3 mt-2">
-      <p class="text-gray-400 text-sm flex-grow">Click to process highlighted text</p>
-      <button id="summarize-btn" class="summarize-btn p-3 ml-3 flex items-center justify-center">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <div class="container w-full h-full flex flex-col">
+    <!-- Header with avatar and title -->
+    <div class="header flex items-center p-4">
+      <div class="ai-avatar rounded-full p-2 mr-3">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 3L4 9V21H20V9L12 3Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-      </button>
+      </div>
+      <div class="text-lg font-semibold text-gray-300">Summus - T & C</div>
+      <div class="ml-auto flex items-center space-x-3">
+        <span class="new-badge text-xs text-white px-2 py-1 rounded-full">New</span>
+        <button class="text-gray-400 hover:text-gray-300">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
     </div>
-  </div>
-  </div>
-  </div>
+
+    <div class="tab-container">
+      <!-- Hidden radio buttons for tab state -->
+      <input type="radio" name="tabs" id="tab1" class="tab-input" checked>
+      <input type="radio" name="tabs" id="tab2" class="tab-input">
+      <input type="radio" name="tabs" id="tab3" class="tab-input">
+      
+      <!-- Tab Navigation -->
+      <ul class="tab-nav">
+        <li>
+          <label for="tab1" class="tab-label tab1-label">Summarizer</label>
+        </li>
+        <li>
+          <label for="tab2" class="tab-label tab2-label">Chatbot</label>
+        </li>
+        <li>
+          <label for="tab3" class="tab-label tab3-label">Help</label>
+        </li>
+      </ul>
+      
+      <!-- Tab Content -->
+      <div class="tab-content-container">
+        <!-- Summarizer Tab -->
+        <div class="tab-content tab1-content flex flex-col h-full">
+          <!-- Welcome Section -->
+          <div class="welcome-section">
+            <div class="greeting">Good evening</div>
+            <div class="instructions">Highlight text on any webpage, then click the button below to process it.</div>
+          </div>
+          
+          <!-- Chat Content -->
+          <div class="flex-grow overflow-y-auto space-y-4 mb-4">
+            <!-- AI Response -->
+            <div class="flex items-start space-x-3">
+              <div class="ai-avatar rounded-full p-2 flex-shrink-0">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 4V4C8.13401 4 5 7.13401 5 11V16.5C5 17.3284 5.67157 18 6.5 18H17.5C18.3284 18 19 17.3284 19 16.5V11C19 7.13401 15.866 4 12 4Z" stroke="white" stroke-width="2"/>
+                  <path d="M12 18V20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M9 22H15" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="chat-bubble p-4 flex-grow">
+                <div class="text-xs text-purple-300 mb-2 font-medium">Summary</div>
+                <textarea id="summary" class="w-full placeholder-text" placeholder="Highlight text on any webpage and click the button below to see your summary..." readonly></textarea>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Input Area -->
+          <div class="input-area flex items-center p-3 mt-auto">
+            <p class="text-purple-300 text-sm flex-grow">Click to process highlighted text</p>
+            <button id="summarize-btn" class="summarize-btn p-3 ml-3 flex items-center justify-center">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Chatbot Tab -->
+        <div class="tab-content tab2-content">
+          <h2 class="text-pink-300 text-xl mb-4">Chat with Claude</h2>
+          <p class="text-purple-300">Ask me anything or continue our conversation.</p>
+        </div>
+        
+        <!-- Help Tab -->
+        <div class="tab-content tab3-content">
+          <h2 class="text-pink-300 text-xl mb-4">Need Help?</h2>
+          <p class="text-purple-300">Here's how to get the most out of Summus:</p>
+          <ul class="text-purple-300 list-disc ml-5 mt-3">
+            <li class="mb-2">Highlight text on any webpage to summarize it</li>
+            <li class="mb-2">Click the button at the bottom to process the selected text</li>
+            <li class="mb-2">Use the tabs to switch between different features</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
   
   <script src="popup.js"></script>
