@@ -1,0 +1,23 @@
+{
+  "name": "globalai",
+  "version": "1.0.0",
+  "description": "for global ai agents hack",
+  "main": "background.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m76domi98/globalai.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m76domi98/globalai/issues"
+  },
+  "homepage": "https://github.com/m76domi98/globalai#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.17",
+    "tailwindcss": "^4.0.17"
+  }
+}
