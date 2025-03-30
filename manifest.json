@@ -3,9 +3,13 @@
   "name": "Summus - T&C Summarizer",
   "version": "1.0",
   "description": "Summarize highlighted terms and conditions.",
-  "permissions": ["scripting", "activeTab", "storage"],
+  "permissions": ["scripting", "activeTab", "storage", "sidePanel"],
   "host_permissions": ["https://*/*", "http://*/*"],
+  "side_panel": {
+        "default_path": "popup.html"
+      },
   "action": {
+    "default_title": "Click to open popup",
     "default_popup": "popup.html",
     "default_icon": {
       "16": "icon.png",
