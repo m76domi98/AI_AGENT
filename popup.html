@@ -12,15 +12,15 @@
       width: 400px;
       height: 600px;
       overflow: hidden;
-      background: linear-gradient(135deg, #7649fe 0%, #4d24c7 100%);
+      background: #1e1e2d;
     }
     .container {
       background-color: #1e1e2d;
       background-image: 
-        radial-gradient(circle at 10% 20%, rgba(100, 78, 210, 0.1) 0%, transparent 30%),
-        radial-gradient(circle at 80% 80%, rgba(120, 94, 240, 0.1) 0%, transparent 30%);
+        radial-gradient(circle at 10% 20%, rgba(100, 78, 210, 0.05) 0%, transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(120, 94, 240, 0.05) 0%, transparent 30%);
       border-radius: 24px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     }
     .chat-bubble {
       background-color: #2d2d3d;
@@ -81,16 +81,16 @@
       display: inline-block;
       margin-right: 6px;
     }
+    .instructions {
+      color: #a0aec0;
+    }
   </style>
 </head>
-<body class="flex items-center justify-center p-4">
+<body>
   <div class="container w-full h-full flex flex-col p-5 relative">
     <!-- Top Bar -->
     <div class="header flex items-center justify-between pb-4 mb-5">
-      <div class="flex items-center">
-        <div class="text-2xl font-bold mr-2 text-transparent bg-clip-text bg-gradient-to-r from-lime-300 to-lime-500">Summus</div>
-        <div class="text-xs text-gray-400 font-medium"> Summus - T&C</div>
-      </div>
+      <div class="text-xl font-semibold text-gray-300">Summus - T&C</div>
       <div class="flex items-center">
         <span class="status-indicator"></span>
         <span class="text-xs text-gray-400">Ready</span>
@@ -98,7 +98,7 @@
     </div>
     
     <!-- Instructions -->
-    <div class="mb-6 text-xs text-gray-400">
+    <div class="mb-6 text-xs instructions">
       <p>Highlight text on any webpage, then click the button below to process it.</p>
     </div>
     
