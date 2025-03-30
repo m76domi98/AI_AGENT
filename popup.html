@@ -187,10 +187,70 @@
     .new-badge {
       background: linear-gradient(135deg, #ff7eb9 0%, #8c52ff 100%);
     }
+     /* Feature card styles */
+     .feature-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    @media (min-width: 640px) {
+      .feature-cards {
+        flex-direction: row;
+      }
+    }
+    
+    .feature-card {
+      background-color: #1a1330;
+      border-radius: 12px;
+      border: 1px solid #3b2d5c;
+      padding: 1.25rem;
+      flex: 1;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      border-color: #8c52ff;
+    }
+    
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(255, 126, 185, 0.2) 0%, rgba(140, 82, 255, 0.2) 100%);
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+    
+    .feature-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(to right, #ff7eb9, #8c52ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .feature-description {
+      color: #a699d1;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
-  <div class="container w-full h-full flex flex-col">
+  <div class="container w-full h-full flex flex-col" style="max-height: 100vh; overflow-y: auto; overflow:scroll;
+    overflow-x:hidden;">
     <!-- Header with avatar and title -->
     <div class="header flex items-center p-4">
       <div class="ai-avatar rounded-full p-2 mr-3">
@@ -230,14 +290,77 @@
       
       <!-- Tab Content -->
       <div class="tab-content-container">
-        <!-- About Tab -->
-        <div class="tab-content tab1-content">
+        <!-- Summarizer Tab -->
+        <div class="tab-content tab1-content flex flex-col h-full" style="overflow-y:auto;">
           <!-- Welcome Section -->
-          <div class="welcome-section">
+          
             <div class="greeting">Get Started</div>
+            <div class="instructions">Summus helps you take control of your privacy with AI-powered tools and tab-based navigation.</div>
+            
+          
+             <!-- Feature Cards -->
+          <div class="feature-cards">
+            <!-- Feature Card 1 -->
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M14 8.5V6.5C14 5.67157 13.3284 5 12.5 5H5.5C4.67157 5 4 5.67157 4 6.5V17.5C4 18.3284 4.67157 19 5.5 19H12.5C13.3284 19 14 18.3284 14 17.5V15.5" stroke="#FF7EB9" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M9 12H20M20 12L17 9M20 12L17 15" stroke="#FF7EB9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
               </div>
+              <h3 class="feature-title">Quick Summarize</h3>
+              <p class="feature-description">Highlight any text on the web and get an instant AI-powered summary with key points.</p>
+            </div>
+
+            <!-- Feature Card 2 -->
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="4" y="4" width="16" height="16" rx="2" stroke="#8C52FF" stroke-width="2"/>
+                  <path d="M4 8H20" stroke="#8C52FF" stroke-width="2"/>
+                  <path d="M8 4V8" stroke="#8C52FF" stroke-width="2"/>
+                  <path d="M16 4V8" stroke="#8C52FF" stroke-width="2"/>
+                  <circle cx="8" cy="14" r="1" fill="#8C52FF"/>
+                  <circle cx="12" cy="14" r="1" fill="#8C52FF"/>
+                  <circle cx="16" cy="14" r="1" fill="#8C52FF"/>
+                </svg>
+              </div>
+              <h3 class="feature-title">Did You Know?</h3>
+              <p class="feature-description">A 2017 Deloitte study revealed that 91% of consumers accept terms and conditions without reading them.</p>
+            </div>
+
+            <!-- Feature Card 3 -->
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 13.9021 3.5901 15.6665 4.59721 17.1199C4.70168 17.2707 4.7226 17.4653 4.64529 17.6317L3.42747 20.2519C3.23699 20.5853 3.47768 21 3.86159 21H12Z" stroke="#FF7EB9" stroke-width="2" stroke-linejoin="round"/>
+                  <circle cx="7.5" cy="12.5" r="1.5" fill="#FF7EB9"/>
+                  <circle cx="12" cy="12.5" r="1.5" fill="#8C52FF"/>
+                  <circle cx="16.5" cy="12.5" r="1.5" fill="#FF7EB9"/>
+                </svg>
+              </div>
+              <h3 class="feature-title">AI Assistant</h3>
+              <p class="feature-description">Chat with our AI assistant to ask questions about content or get help with any task.</p>
+            </div>
+          </div>
+
+
+            <!-- Feature Card 4 -->
+            <div class="feature-card">
+              <div class="feature-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 13.9021 3.5901 15.6665 4.59721 17.1199C4.70168 17.2707 4.7226 17.4653 4.64529 17.6317L3.42747 20.2519C3.23699 20.5853 3.47768 21 3.86159 21H12Z" stroke="#FF7EB9" stroke-width="2" stroke-linejoin="round"/>
+                  <circle cx="7.5" cy="12.5" r="1.5" fill="#FF7EB9"/>
+                  <circle cx="12" cy="12.5" r="1.5" fill="#8C52FF"/>
+                  <circle cx="16.5" cy="12.5" r="1.5" fill="#FF7EB9"/>
+                </svg>
+              </div>
+              <h3 class="feature-title">Privacy Challenges</h3>
+              <p class="feature-description">Each time you skip reading the terms and conditions, you become more unaware of what you're agreeing to, potentially exposing yourself to data-sharing risks or legal liabilities. </p>
+            </div>
+          </div>
     
-        </div>
+       
 
         <!-- Summarizer Tab -->
         <div class="tab-content tab2-content">
@@ -276,7 +399,10 @@
         
         <!-- Chatbot Tab -->
         <div class="tab-content tab3-content">
-          <h2 class="greetings">Chatbot</h2>
+          <div class="welcome-section">
+            <div class="greeting">Chatbot</div>
+            <div class="instructions">Chat with our LLM for interactive guidance.</div>
+          </div>
           <div class="flex-grow overflow-y-auto space-y-4 mb-4 h-64">
             <!-- Example chat bubbles -->
             <div class="flex items-start space-x-3">
