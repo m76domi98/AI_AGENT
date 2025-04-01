@@ -252,6 +252,19 @@
     .summarize-btn:active {
       transform: translateY(1px);
     }
+    .chat-btn {
+      background: linear-gradient(135deg, #ff7eb9 0%, #8c52ff 100%);
+      border-radius: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    .chat-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+    }
+    .chat-btn:active {
+      transform: translateY(1px);
+    }
     .header {
       border-bottom: 1px solid #3b2d5c;
     }
@@ -602,37 +615,102 @@
         
         <!-- Chatbot Tab -->
         <div class="tab-content tab3-content">
-          <div class="welcome-section">
-            <div class="greeting">Chatbot</div>
-            <div class="instructions">Chat with our LLM for interactive guidance.</div>
-          </div>
-          <div class="flex-grow overflow-y-auto space-y-4 mb-4 h-64">
-            <!-- Example chat bubbles -->
-            <div class="flex items-start space-x-3">
-              <div class="ai-avatar rounded-full p-2 flex-shrink-0">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 4V4C8.13401 4 5 7.13401 5 11V16.5C5 17.3284 5.67157 18 6.5 18H17.5C18.3284 18 19 17.3284 19 16.5V11C19 7.13401 15.866 4 12 4Z" stroke="white" stroke-width="2"/>
-                  <path d="M12 18V20" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                  <path d="M9 22H15" stroke="white" stroke-width="2" stroke-linecap="round"/>
-                </svg>
+            <div class="welcome-section">
+                <div class="greeting">Chatbot</div>
+                <div class="instructions">Chat with our LLM for interactive guidance.</div>
+                <div id="chat-box"></div>
               </div>
-              <div class="chat-bubble p-4 flex-grow">
-                <p class="text-gray-300">Hello! How can I help you today?</p>
-              </div>
+
+            <!-- Chat Messages Section -->
+            <div class="flex-grow overflow-y-auto space-y-4 mb-4 h-64">
+                <!-- Example chat bubbles -->
+                <div class="flex items-start space-x-3">
+                    <div class="ai-avatar rounded-full p-2 flex-shrink-0">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 4V4C8.13401 4 5 7.13401 5 11V16.5C5 17.3284 5.67157 18 6.5 18H17.5C18.3284 18 19 17.3284 19 16.5V11C19 7.13401 15.866 4 12 4Z" stroke="white" stroke-width="2" />
+                            <path d="M12 18V20" stroke="white" stroke-width="2" stroke-linecap="round" />
+                            <path d="M9 22H15" stroke="white" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <div class="chat-bubble p-4 flex-grow">
+                        <p class="text-gray-300">Hello! How can I help you today?</p>
+                    </div>
+                </div>
             </div>
-          </div>
 
+            <!-- Input Section -->
+            <div class="input-area flex items-center p-3 mt-auto">
+                <input type="text" placeholder="Type your message..." id="user-input" class="bg-transparent text-gray-300 flex-grow focus:outline-none placeholder-text">
+                <button class="summarize-btn p-3 ml-3 flex items-center justify-center">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
 
-          <div class="input-area flex items-center p-3 mt-auto">
-            <input type="text" placeholder="Type your message..." class="bg-transparent text-gray-300 flex-grow focus:outline-none placeholder-text">
-            <button class="summarize-btn p-3 ml-3 flex items-center justify-center">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </button>
-          </div>
+    <script>
+      // Initialize the chat interface
+      const chatBox = document.getElementById('chat-box');
+      const userInput = document.getElementById('user-input');
+      const sendBtn = document.getElementById('send-btn');
 
-          
+      // Function to display messages in the chatbox
+      function displayMessage(message, sender) {
+          const messageDiv = document.createElement('div');
+          messageDiv.classList.add('chat-message');
+          const messageText = document.createElement('p');
+          messageText.textContent = message;
+          messageDiv.appendChild(messageText);
+          messageDiv.classList.add(sender);
+          chatBox.appendChild(messageDiv);
+          chatBox.scrollTop = chatBox.scrollHeight;  // Scroll to the bottom
+      }
+
+      // Function to handle the user input and communicate with the agent (Hugging Face or AgentVerse)
+      async function handleUserInput() {
+          const message = userInput.value.trim();
+          if (message) {
+              displayMessage(message, 'user-message');
+              userInput.value = '';  // Clear input field
+
+              // Make the API call to get the bot response (Here, you can use Hugging Face or AgentVerse)
+              const botResponse = await getBotResponse(message);
+              displayMessage(botResponse, 'bot-message');
+          }
+      }
+
+      // Example: Simple function to simulate an agent response using Hugging Face API or AgentVerse
+      async function getBotResponse(userMessage) {
+          // You can use a local AgentVerse agent or a Hugging Face API call here
+          // Here's an example of how you could use a Hugging Face API call (if running on a backend)
+          try {
+              const response = await fetch('http://localhost:5000/chat', {  // Assuming a local Flask backend
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ message: userMessage })
+              });
+
+              const data = await response.json();
+              return data.response;  // Return the bot's response
+          } catch (error) {
+              console.error("Error:", error);
+              return "Sorry, I couldn't process your request. Please try again.";
+          }
+      }
+
+      // Event listener for sending user input
+      sendBtn.addEventListener('click', handleUserInput);
+      userInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+              handleUserInput();
+          }
+      });
+  </script>
+
         </div>
       </div>
     </div>
