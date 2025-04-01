@@ -8,10 +8,24 @@ document.getElementById("summarize-btn").addEventListener("click", async () => {
     }
 });
 
-function extractHighlightedText() {
+async function extractHighlightedText() {
     let selectedText = window.getSelection().toString().trim();
-    chrome.runtime.sendMessage({ action: "displaySummary", summary: selectedText });
-}
+
+        const response = await fetch("http://localhost:8000/summarize", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                selectedText: selectedText  
+            })
+        });
+
+        const data = await response.json();
+
+        chrome.runtime.sendMessage({ action: "displaySummary", summary: data.response });
+    } 
+
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "displaySummary") {
