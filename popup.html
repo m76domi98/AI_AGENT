@@ -641,75 +641,15 @@
             <!-- Input Section -->
             <div class="input-area flex items-center p-3 mt-auto">
                 <input type="text" placeholder="Type your message..." id="user-input" class="bg-transparent text-gray-300 flex-grow focus:outline-none placeholder-text">
-                <button class="summarize-btn p-3 ml-3 flex items-center justify-center">
+                <button id="chat-btn" class="chat-btn p-3 ml-3 flex items-center justify-center">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </button>
             </div>
+          
         </div>
     </div>
-
-    <script>
-      // Initialize the chat interface
-      const chatBox = document.getElementById('chat-box');
-      const userInput = document.getElementById('user-input');
-      const sendBtn = document.getElementById('send-btn');
-
-      // Function to display messages in the chatbox
-      function displayMessage(message, sender) {
-          const messageDiv = document.createElement('div');
-          messageDiv.classList.add('chat-message');
-          const messageText = document.createElement('p');
-          messageText.textContent = message;
-          messageDiv.appendChild(messageText);
-          messageDiv.classList.add(sender);
-          chatBox.appendChild(messageDiv);
-          chatBox.scrollTop = chatBox.scrollHeight;  // Scroll to the bottom
-      }
-
-      // Function to handle the user input and communicate with the agent (Hugging Face or AgentVerse)
-      async function handleUserInput() {
-          const message = userInput.value.trim();
-          if (message) {
-              displayMessage(message, 'user-message');
-              userInput.value = '';  // Clear input field
-
-              // Make the API call to get the bot response (Here, you can use Hugging Face or AgentVerse)
-              const botResponse = await getBotResponse(message);
-              displayMessage(botResponse, 'bot-message');
-          }
-      }
-
-      // Example: Simple function to simulate an agent response using Hugging Face API or AgentVerse
-      async function getBotResponse(userMessage) {
-          // You can use a local AgentVerse agent or a Hugging Face API call here
-          // Here's an example of how you could use a Hugging Face API call (if running on a backend)
-          try {
-              const response = await fetch('http://localhost:5000/chat', {  // Assuming a local Flask backend
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({ message: userMessage })
-              });
-
-              const data = await response.json();
-              return data.response;  // Return the bot's response
-          } catch (error) {
-              console.error("Error:", error);
-              return "Sorry, I couldn't process your request. Please try again.";
-          }
-      }
-
-      // Event listener for sending user input
-      sendBtn.addEventListener('click', handleUserInput);
-      userInput.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter') {
-              handleUserInput();
-          }
-      });
-  </script>
 
         </div>
       </div>
