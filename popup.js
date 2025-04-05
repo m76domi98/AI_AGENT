@@ -480,7 +480,8 @@ styleElement.textContent = `
   }
   
   .user-avatar {
-      background-color: #8C52FF;
+      background: linear-gradient(135deg, #ff7eb9 0%, #8c52ff 100%);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
   
   .ai-avatar {
