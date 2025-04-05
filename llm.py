@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-API_KEY_CREDITS = {os.getenv("API_KEY"): 5}
+API_KEY_CREDITS = {os.getenv("API_KEY"): 10}
 app = FastAPI()
 
 class PromptRequest(BaseModel):
