@@ -4,7 +4,7 @@
   "version": "1.0",
   "description": "Summarize highlighted terms and conditions.",
   "permissions": ["scripting", "activeTab", "storage", "sidePanel"],
-  "host_permissions": ["https://*/*", "http://*/*"],
+  "host_permissions": ["https://*/*", "http://*/*", "http://127.0.0.1:8000/*"],
   "side_panel": {
         "default_path": "popup.html"
       },
