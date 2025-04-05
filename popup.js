@@ -8,8 +8,48 @@ document.getElementById("summarize-btn").addEventListener("click", async () => {
     }
 });
 
+function extractHighlightedText() {
+    let selectedText = window.getSelection().toString().trim();
+    chrome.runtime.sendMessage({ action: "displaySummary", summary: selectedText });
+} 
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "displaySummary") {
+        document.getElementById("summary").value = request.summary || "No text selected.";
+    }
+});
+
+/*
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "displaySummary" && request.summary) {
+        fetch("http://127.0.0.1:8000/summarize", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ selectedText: request.summary }),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            const summaryText = data.response || "No summary available.";
+            // Display this however you want
+            console.log("SUMMARY:", summaryText);
+
+            // Example: show it in the popup
+            const resultBox = document.getElementById("summary-result");
+            if (resultBox) resultBox.innerText = summaryText;
+        })
+        .catch((err) => console.error("Error fetching summary:", err));
+    }
+}); 
+
+
 async function extractHighlightedText() {
     let selectedText = window.getSelection().toString().trim();
+
+    if (!selectedText){
+      return "No text selected";
+    }
 
         const response = await fetch("http://localhost:8000/summarize", {
             method: "POST",
@@ -27,11 +67,39 @@ async function extractHighlightedText() {
     } 
 
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === "displaySummary") {
-        document.getElementById("summary").value = request.summary || "No text selected.";
-    }
-});
+        chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+            if (request.action === "displaySummary" && request.summary) {
+                // Optional: show a loading state
+                const resultBox = document.getElementById("summary-result");
+                if (resultBox) resultBox.innerText = "Analyzing summary...";
+        
+                fetch("http://127.0.0.1:8000/summarize", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        // Optional if your backend requires API key
+                       // "x-api-key": "secretkey"
+                    },
+                    body: JSON.stringify({ selectedText: request.summary }),
+                })
+                //Promise Chaining when dealing with asynchronous operations like an HTTP request
+                .then((res) => res.json()) //res is the raw HTTP response from the server (FastAPI), then parsing it as JSON
+                .then((data) => { //converts HTTP response as usable JavaScript data
+                    const summaryText = data.response || "No summary available."; //extracts response from JSON, otherwise displays no summary
+                    if (resultBox) resultBox.innerText = summaryText; //inserts summarized text in HTML textarea
+                })
+                .catch((err) => {
+                    console.error("Error fetching summary:", err);
+                    if (resultBox) resultBox.innerText = "An error occurred while summarizing.";
+                });
+            } else {
+                // Handle cases where no text is selected
+                const resultBox = document.getElementById("summary-result");
+                if (resultBox) resultBox.innerText = "No text selected.";
+            }
+        }); */
+        
+        
 
 chrome.sidePanel.setPanelBehavior({
     openPanelOnActionClick: true
@@ -124,6 +192,7 @@ chrome.sidePanel.setPanelBehavior({
     }
   });
 
+  
  // Function to send prompts to Ollama backend
 async function sendPromptToAI(prompt) {
   const response = await fetch("http://127.0.0.1:8000/generate", {
@@ -504,3 +573,4 @@ styleElement.textContent = `
 `;
 
 document.head.appendChild(styleElement);
+
